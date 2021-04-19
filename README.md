@@ -3,7 +3,7 @@ The Angular Solver for Horizon from Elevation Sets (ASHES) code calculates the a
 
 ## Installation
 ```
-git clone https://github.com/npbassett/ashes
+git clone https://github.com/npbassett/ashes.git
 cd ashes
 python setup.py develop
 ```
