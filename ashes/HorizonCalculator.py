@@ -1,3 +1,12 @@
+"""
+File: ashes/HorizonCalculator.py
+Author: Neil Bassett
+Date: 19 April 2021
+
+Description: File containing HorizonCalculator class which reads elevation
+             data and calculates the angular horizon from a given location.
+"""
+
 import os
 import time
 import numpy as np
@@ -152,6 +161,28 @@ class HorizonCalculator(object):
         return self._elevation_grid
 
     @property
+    def elevation_interpolation_degree(self):
+        """
+        Property storing the degree of the spline to use in interpolating
+        the elevation data grid.
+        """
+        if not hasattr(self, '_elevation_interpolation_degree'):
+            self._elevation_interpolation_degree = 3
+        return self._elevation_interpolation_degree
+
+    @elevation_interpolation_degree.setter
+    def elevation_interpolation_degree(self, value):
+        """
+        Setter for the elevation_interpolation_degree property.
+
+        value: integer
+        """
+        if value <= 0:
+            return ValueError('elevation_interpolation_degree must be a' +\
+                'positive integer')
+        self._elevation_interpolation_degree = value
+
+    @property
     def elevation_interpolation_function(self):
         """
         Property storing the function that interpolates the elevation data
@@ -161,7 +192,9 @@ class HorizonCalculator(object):
             lon_array = np.arange(self.bounds[0], self.bounds[2], 1/(60*60))
             lat_array = np.arange(self.bounds[1], self.bounds[3], 1/(60*60))
             self._elevation_interpolation_function = RectBivariateSpline(\
-                lon_array, lat_array, np.flip(self.elevation_grid.T, axis=1), kx=1, ky=1)
+                lon_array, lat_array, np.flip(self.elevation_grid.T, axis=1),\
+                kx=self.elevation_interpolation_degree,\
+                ky=self.elevation_interpolation_degree)
         return self._elevation_interpolation_function
 
     def find_lon_lat(self, alpha, gamma):
@@ -250,11 +283,18 @@ class HorizonCalculator(object):
         return np.array(azimuths) * (180. / np.pi),\
             np.array(horizon_profile) * (180. / np.pi)
 
-    def plot_topo_map(self, show=True):
+    def plot_topo_map(self, show=True, **kwargs):
+        """
+        Plots a 2D map of the elevation data.
+
+        show: if True, matplotlib.pyplot.show() is called before this function
+              returns
+        **kwargs: keyword arguments to pass to matplotlib.pyplot.imshow()
+        """
         fig, ax = plt.subplots()
         plt.scatter(*self.observer_coordinates, c='r', marker='*', s=50)
         plt.imshow(self.elevation_grid, extent=(self.bounds[0], self.bounds[2],\
-            self.bounds[1], self.bounds[3]), cmap='terrain')
+            self.bounds[1], self.bounds[3]), cmap='terrain', **kwargs)
         plt.xlabel(r'Longitude ($^{\circ}$)')
         plt.ylabel(r'Latitude ($^{\circ}$)')
         plt.colorbar(label='Elevation (m)')
