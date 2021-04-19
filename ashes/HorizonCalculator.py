@@ -278,8 +278,8 @@ class HorizonCalculator(object):
                 horizon_angles += [self.horizon_angle(azimuths[i], gamma)]
             horizon_profile += [np.amax(horizon_angles)]
             if verbose:
-                print('alpha angle %i/%i completed in %.2f minutes...'\
-                    % (i+1, len(azimuths), (time.time() - start) / 60.))
+                print('alpha angle %i/%i completed in %.1f seconds...'\
+                    % (i+1, len(azimuths), time.time() - start))
         return np.array(azimuths) * (180. / np.pi),\
             np.array(horizon_profile) * (180. / np.pi)
 
