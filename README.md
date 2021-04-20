@@ -15,6 +15,7 @@ You will need the following Python packages:
 * [matplotlib](http://matplotlib.org/)
 * [elevation](https://pypi.org/project/elevation/)
 * [richdem](https://richdem.readthedocs.io/en/latest/)
+* [GDAL](https://pypi.org/project/GDAL/)
 
 ## Contributors
 Primary Author: Neil Bassett (CU Boulder)
