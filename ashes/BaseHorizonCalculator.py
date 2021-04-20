@@ -40,9 +40,9 @@ class BaseHorizonCalculator(object):
         if (coordinates[0] < -180.) or (coordinates[0] > 180.):
             raise ValueError('Longitude coordinate must be between ' +\
                 '-180 and 180 degrees')
-        elif (coordinates[1] < 0.) or (coordinates[1] > 180.):
+        elif (coordinates[1] < -90.) or (coordinates[1] > 90.):
             raise ValueError('Latitude coordinate must be between ' +\
-                '0 and 180 degrees')
+                '-90 and 90 degrees')
         self._observer_coordinates = coordinates
 
     @property
