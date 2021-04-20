@@ -61,9 +61,9 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
         Property storing the size of an elevation grid pixel in
         latitude.
         """
-        if not hasattr(self, '_lattitude_resolution'):
-            self._lattitude_resolution = 1 / (60 * 60)
-        return self._lattitude_resolution
+        if not hasattr(self, '_latitude_resolution'):
+            self._latitude_resolution = 1 / (60 * 60)
+        return self._latitude_resolution
 
     @property
     def elevation_grid(self):
