@@ -116,7 +116,7 @@ class LunarHorizonCalculator(BaseHorizonCalculator):
         if not hasattr(self, '_elevation_grid'):
             t_start = time.time()
             elevation_data_path = '{!s}/input/'.format(os.getenv('ASHES')) +\
-                'Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif'
+                'LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif'
             raster_array = gdal_array.LoadFile(elevation_data_path)
             raster_res_deg = 180. / raster_array.shape[0]
             lon_bounds_pix = (int((180. + self.bounds[0]) / raster_res_deg),\
