@@ -158,8 +158,10 @@ class BaseHorizonCalculator(object):
         between grid points.
         """
         if not hasattr(self, '_elevation_interpolation_function'):
-            lon_array = np.arange(self.bounds[0], self.bounds[2], 1/(60*60))
-            lat_array = np.arange(self.bounds[1], self.bounds[3], 1/(60*60))
+            lon_array = np.arange(self.bounds[0], self.bounds[2],\
+                self.longitude_resolution)
+            lat_array = np.arange(self.bounds[1], self.bounds[3],\
+                self.latitude_resolution)
             self._elevation_interpolation_function = RectBivariateSpline(\
                 lon_array, lat_array, np.flip(self.elevation_grid.T, axis=1),\
                 kx=self.elevation_interpolation_degree,\

@@ -46,6 +46,26 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
         return self._body_radius
 
     @property
+    def longitude_resolution(self):
+        """
+        Property storing the size of an elevation grid pixel in
+        longitude.
+        """
+        if not hasattr(self, '_longitude_resolution'):
+            self._longitude_resolution = 1 / (60 * 60)
+        return self._longitude_resolution
+
+    @property
+    def latitude_resolution(self):
+        """
+        Property storing the size of an elevation grid pixel in
+        latitude.
+        """
+        if not hasattr(self, '_lattitude_resolution'):
+            self._lattitude_resolution = 1 / (60 * 60)
+        return self._lattitude_resolution
+
+    @property
     def elevation_grid(self):
         """
         Property storing the grid containing the elevation data.
