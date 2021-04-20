@@ -11,3 +11,5 @@ from ashes.coordinates import CTP_coordinates, EDGES_coordinates,\
 from ashes.BaseHorizonCalculator import BaseHorizonCalculator
 from ashes.TerrestrialHorizonCalculator import\
     TerrestrialHorizonCalculator
+from ashes.LunarHorizonCalculator import\
+    LunarHorizonCalculator
