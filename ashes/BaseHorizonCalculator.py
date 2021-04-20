@@ -108,10 +108,15 @@ class BaseHorizonCalculator(object):
         if not hasattr(self, '_bounds'):
             lon_width = 2.
             lat_width = 2.
-            self._bounds = (self.observer_coordinates[0] - (lon_width / 2.),\
-	        self.observer_coordinates[1] - (lat_width / 2.),\
-                self.observer_coordinates[0] + (lon_width / 2.),\
-                self.observer_coordinates[1] + (lat_width / 2.))
+            self._bounds =\
+                [self.observer_coordinates[0] -\
+                (self.grid_width_longitude / 2.),\
+	        self.observer_coordinates[1] -\
+                (self.grid_width_latitude / 2.),\
+                self.observer_coordinates[0] +\
+                (self.grid_width_longitude / 2.),\
+                self.observer_coordinates[1] +\
+                (self.grid_width_latitude / 2.)]
         return self._bounds
 
     @bounds.setter

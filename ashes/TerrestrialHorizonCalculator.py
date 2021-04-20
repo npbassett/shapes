@@ -66,6 +66,48 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
         return self._latitude_resolution
 
     @property
+    def grid_width_longitude(self):
+        """
+        Property storing the size of the elevation grid in longitude.
+        """
+        if not hasattr(self, '_grid_width_longitude'):
+            self._grid_width_longitude = 2.
+        return self._grid_width_longitude
+
+    @grid_width_longitude.setter
+    def grid_width_longitude(self, value):
+        """
+        Setter for the grid_width_longitude property.
+
+        Value: positive number greater than gamma_max
+        """
+        if value < self.gamma_max:
+            raise ValueError('grid_width_longitude must be larger' +\
+                'than gamma_max.')
+        self._grid_width_longitude = value
+
+    @property
+    def grid_width_latitude(self):
+        """
+        Property storing the size of the elevation grid in latitude.
+        """
+        if not hasattr(self, '_grid_width_latitude'):
+            self._grid_width_latitude = 2.
+        return self._grid_width_latitude
+
+    @grid_width_latitude.setter
+    def grid_width_latitude(self, value):
+        """
+        Setter for the grid_width_latitude property.
+
+        Value: positive number greater than gamma_max
+        """
+        if value < self.gamma_max:
+            raise ValueError('grid_width_latitude must be larger' +\
+                'than gamma_max.')
+        self._grid_width_latitude = value
+
+    @property
     def elevation_grid(self):
         """
         Property storing the grid containing the elevation data.
