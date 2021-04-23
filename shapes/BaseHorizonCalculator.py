@@ -230,7 +230,7 @@ class BaseHorizonCalculator(object):
             self.observer_elevation) / (self.body_radius + h)) / np.sin(gamma)))
         return eta
 
-    def horizon_profile(self, N_alpha, N_gamma, verbose=True):
+    def horizon_profile(self, N_alpha, N_gamma):
         """
         Calculates the full horizon profile.
 
@@ -238,7 +238,6 @@ class BaseHorizonCalculator(object):
         N_gamma: number of gamma angles (i.e. the angular distance from the
                  observer along the azimuthal angle alpha) from gamma_min
                  to gamma_max
-        verbose: if True, print information about progress
 
         Returns an array of azimuthal angles and a corresponding array of horizon
         angles making up the horizon profile (in degrees).
@@ -247,13 +246,22 @@ class BaseHorizonCalculator(object):
         gammas = np.linspace(self.gamma_min * (np.pi / 180.),\
             self.gamma_max * (np.pi / 180.), N_gamma)
         horizon_profile = []
-        for i in np.arange(N_alpha):
-            start = time.time()
-            horizon_angles = []
-            for gamma in gammas:
-                horizon_angles += [self.horizon_angle(azimuths[i], gamma)]
-            horizon_profile += [np.amax(horizon_angles)]
-            if verbose:
+        try:
+            import progressbar
+            self.elevation_grid
+            for i in progressbar.progressbar(np.arange(N_alpha)):
+                start = time.time()
+                horizon_angles = []
+                for gamma in gammas:
+                    horizon_angles += [self.horizon_angle(azimuths[i], gamma)]
+                horizon_profile += [np.amax(horizon_angles)]
+        except ModuleNotFoundError:
+            for i in np.arange(N_alpha):
+                start = time.time()
+                horizon_angles = []
+                for gamma in gammas:
+                    horizon_angles += [self.horizon_angle(azimuths[i], gamma)]
+                horizon_profile += [np.amax(horizon_angles)]
                 print('alpha angle %i/%i completed in %.1f seconds...'\
                     % (i+1, len(azimuths), time.time() - start))
         return np.array(azimuths) * (180. / np.pi),\
