@@ -1,5 +1,5 @@
 """
-File: ashes/coordinates.py
+File: shapes/coordinates.py
 Author: Neil Bassett
 Date: 19 April 2021
 

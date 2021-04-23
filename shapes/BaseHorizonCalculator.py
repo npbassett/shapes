@@ -1,5 +1,5 @@
 """
-File: ashes/BaseHorizonCalculator.py
+File: shapes/BaseHorizonCalculator.py
 Author: Neil Bassett
 Date: 20 April 2021
 

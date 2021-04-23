@@ -1,12 +1,12 @@
 """
-File: ashes/examples/terrestrial_horizon_calculator.py
+File: shapes/examples/terrestrial_horizon_calculator.py
 Author: Neil Bassett
 Date: 20 April 2021
 
 Description: Example showing how to use the TerrestrialHorizonCalculator
              class.
 """
-from ashes import CTP_coordinates, TerrestrialHorizonCalculator
+from shapes import CTP_coordinates, TerrestrialHorizonCalculator
 import matplotlib.pyplot as plt
 
 terrestrial_horizon_calculator = TerrestrialHorizonCalculator(CTP_coordinates)

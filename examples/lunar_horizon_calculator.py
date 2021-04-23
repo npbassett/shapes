@@ -1,12 +1,12 @@
 """
-File: ashes/examples/lunar_horizon_calculator.py
+File: shapes/examples/lunar_horizon_calculator.py
 Author: Neil Bassett
 Date: 20 April 2021
 
 Description: Example showing how to use the LunarHorizonCalculator
              class.
 """
-from ashes import LunarHorizonCalculator
+from shapes import LunarHorizonCalculator
 import matplotlib.pyplot as plt
 
 schrodinger_coordinates = (132.4, -75.0)

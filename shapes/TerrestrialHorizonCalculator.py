@@ -1,5 +1,5 @@
 """
-File: ashes/TerrestrialHorizonCalculator.py
+File: shapes/TerrestrialHorizonCalculator.py
 Author: Neil Bassett
 Date: 20 April 2021
 

@@ -1,5 +1,5 @@
 """
-File: ashes/LunarHorizonCalculator.py
+File: shapes/LunarHorizonCalculator.py
 Author: Neil Bassett
 Date: 20 April 2021
 
@@ -115,7 +115,7 @@ class LunarHorizonCalculator(BaseHorizonCalculator):
         """
         if not hasattr(self, '_elevation_grid'):
             t_start = time.time()
-            elevation_data_path = '{!s}/input/'.format(os.getenv('ASHES')) +\
+            elevation_data_path = '{!s}/input/'.format(os.getenv('SHAPES')) +\
                 'LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif'
             raster_array = gdal_array.LoadFile(elevation_data_path)
             raster_res_deg = 180. / raster_array.shape[0]
