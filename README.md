@@ -1,11 +1,11 @@
-# ASHES
-The Angular Solver for Horizon from Elevation Sets (ASHES) code calculates the angular horizon as seen from a given location. While ASHES was developed primarily for low radio frequency global 21-cm experiments, the code is broadly applicable.
+# SHAPES
+The Simulating Horizon Angle Profile from Elevation Sets (SHAPES) code calculates the angular horizon as seen from a given location. While SHAPES was developed primarily for low radio frequency global 21-cm experiments, the code is broadly applicable.
 
 ## Getting Started
 To clone a copy of the repository and install:
 ```
-git clone https://github.com/npbassett/ashes.git
-cd ashes
+git clone https://github.com/npbassett/shapes.git
+cd shapes
 python setup.py develop
 ```
 
@@ -17,9 +17,9 @@ Note that this step will take a few minutes and download an ~8 GB file. If you o
 ```
 python remote.py fresh
 ```
-In order for *ashes* to access the input data, it will look in `$ASHES/input` so you will need to set an environment variable that points to the *ashes* install directory in your shell startup file (e.g. `.bashrc`):
+In order for *shapes* to access the lunar data, it will look in `$SHAPES/input` so you will need to set an environment variable that points to the *shapes* install directory in your shell startup file (e.g. `.bashrc`):
 ```
-export ASHES=/users/<yourusername>/ashes
+export SHAPES=/users/<yourusername>/shapes
 ```
 
 ## Dependencies
