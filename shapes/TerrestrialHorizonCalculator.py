@@ -116,4 +116,5 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
             dem_path = os.path.join(os.getcwd(), 'DEM.tif')
             elevation.clip(bounds=self.bounds, output=dem_path)
             self._elevation_grid = np.array(rd.LoadGDAL(dem_path))
+            os.remove('DEM.tif')
         return self._elevation_grid
