@@ -31,5 +31,8 @@ You will need the following Python packages:
 * [richdem](https://richdem.readthedocs.io/en/latest/)
 * [GDAL](https://pypi.org/project/GDAL/)
 
+Optional:
+* [progressbar2](https://progressbar-2.readthedocs.io/en/latest/)
+
 ## Contributors
 Primary Author: Neil Bassett
