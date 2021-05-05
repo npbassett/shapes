@@ -41,9 +41,10 @@ class LunarHorizonCalculator(BaseHorizonCalculator):
     def body_radius(self):
         """
         Property storing the radius of the body (i.e. the Moon) in meters.
+        Note that this is the volumetric mean radius.
         """
         if not hasattr(self, '_body_radius'):
-            self._body_radius = 1.7371e6
+            self._body_radius = 1.7374e6
         return self._body_radius
 
     @property

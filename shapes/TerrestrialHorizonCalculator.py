@@ -18,7 +18,7 @@ from .BaseHorizonCalculator import BaseHorizonCalculator
 
 class TerrestrialHorizonCalculator(BaseHorizonCalculator):
     """
-    An object which calculates the angular horizon as seen from a
+    Class that calculates the angular horizon as seen from a
     location on Earth at the given coordinates.
     """
     def __init__(self, observer_coordinates, gamma_min=0.005, gamma_max=1.0):
@@ -40,9 +40,10 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
     def body_radius(self):
         """
         Property storing the radius of the body (i.e. the Earth) in meters.
+        Note that this is the volumetric mean radius.
         """
         if not hasattr(self, '_body_radius'):
-            self._body_radius = 6.378e6
+            self._body_radius = 6.371000e6
         return self._body_radius
 
     @property
