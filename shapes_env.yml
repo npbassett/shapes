@@ -1,0 +1,13 @@
+name: shapes_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - scipy
+  - matplotlib
+  - numpy
+  - progressbar2
+  - richdem
+  - make
+  - elevation
+  - gdal
