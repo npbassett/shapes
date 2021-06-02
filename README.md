@@ -2,13 +2,20 @@
 The Simulating Horizon Angle Profile from Elevation Sets (SHAPES) code calculates the angular horizon as seen from a given location. While SHAPES was developed primarily for low radio frequency global 21-cm experiments, the code is broadly applicable.
 
 ## Getting Started
-To clone a copy of the repository and install:
+To clone a copy of the repository:
 ```
 git clone https://github.com/npbassett/shapes.git
+```
+To ensure that all dependencies are properly installed, it is recommended that you use `shapes_env.yml` to create a [conda](conda.io) environment in which to run *shapes*:
+```
 cd shapes
+conda env create -f shapes_env.yml
+conda activate shapes_env
+```
+Once in the `shapes_env` environment (or all dependencies are installed in some other manner), install the package:
+```
 python setup.py develop
 ```
-
 To download the LRO LOLA elevation data needed for lunar horizon calculations:
 ```
 python remote.py
@@ -19,7 +26,7 @@ python remote.py fresh
 ```
 In order for *shapes* to access the lunar data, it will look in `$SHAPES/input` so you will need to set an environment variable that points to the *shapes* install directory in your shell startup file (e.g. `.bashrc`):
 ```
-export SHAPES=/users/<yourusername>/shapes
+export SHAPES=<path_to_shapes_directory>
 ```
 
 ## Dependencies
