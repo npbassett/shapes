@@ -1,6 +1,9 @@
 # SHAPES
 The Simulating Horizon Angle Profile from Elevation Sets (SHAPES) code calculates the angular horizon as seen from a given location. While SHAPES was developed primarily for low radio frequency global 21-cm experiments, the code is broadly applicable.
 
+## Citation
+SHAPES and the algorithm behind it were introduced in [Bassett et al. 2021](https://ui.adsabs.harvard.edu/abs/2021arXiv210602153B/abstract). If you use SHAPES for any academic work, please cite this paper.
+
 ## Getting Started
 To clone a copy of the repository:
 ```
