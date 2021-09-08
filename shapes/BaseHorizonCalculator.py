@@ -106,8 +106,6 @@ class BaseHorizonCalculator(object):
         Property storing the bounds of the elevation data grid.
         """
         if not hasattr(self, '_bounds'):
-            #lon_width = 2.
-            #lat_width = 2.
             lon_lower_bound = self.observer_coordinates[0] -\
                 (self.grid_width_longitude / 2.)
             lon_upper_bound = self.observer_coordinates[0] +\
