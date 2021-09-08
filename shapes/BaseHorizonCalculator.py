@@ -106,17 +106,22 @@ class BaseHorizonCalculator(object):
         Property storing the bounds of the elevation data grid.
         """
         if not hasattr(self, '_bounds'):
-            lon_width = 2.
-            lat_width = 2.
+            #lon_width = 2.
+            #lat_width = 2.
+            lon_lower_bound = self.observer_coordinates[0] -\
+                (self.grid_width_longitude / 2.)
+            lon_upper_bound = self.observer_coordinates[0] +\
+                (self.grid_width_longitude / 2.)
+            lat_lower_bound = self.observer_coordinates[1] -\
+                (self.grid_width_latitude / 2.)
+            lat_upper_bound = self.observer_coordinates[1] +\
+       	        (self.grid_width_latitude / 2.)
+            if (lat_lower_bound < -90.) or (lat_upper_bound > 90.):
+                raise ValueError('Locations near the poles are not'+\
+                    'currently supported. Working on a fix for this!')
             self._bounds =\
-                [self.observer_coordinates[0] -\
-                (self.grid_width_longitude / 2.),\
-	        self.observer_coordinates[1] -\
-                (self.grid_width_latitude / 2.),\
-                self.observer_coordinates[0] +\
-                (self.grid_width_longitude / 2.),\
-                self.observer_coordinates[1] +\
-                (self.grid_width_latitude / 2.)]
+                [lon_lower_bound, lat_lower_bound,\
+                 lon_upper_bound, lat_upper_bound]
         return self._bounds
 
     @bounds.setter
