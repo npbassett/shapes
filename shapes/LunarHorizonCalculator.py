@@ -8,6 +8,7 @@ Description: File containing LunarHorizonCalculator class which reads
              location on the surface of the Moon.
 """
 import os
+import gc
 import time
 import numpy as np
 import elevation
@@ -120,14 +121,16 @@ class LunarHorizonCalculator(BaseHorizonCalculator):
                 'LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif'
             raster_array = gdal_array.LoadFile(elevation_data_path)
             raster_res_deg = 180. / raster_array.shape[0]
-            lon_bounds_pix = (int((180. + self.bounds[0]) / raster_res_deg),\
-                int((180. + self.bounds[2]) / raster_res_deg))
-            lat_bounds_pix = (int((90. - self.bounds[3]) / raster_res_deg),\
-                int((90. - self.bounds[1]) / raster_res_deg))
+            lon_bounds_pix =\
+                (np.ceil((180. + self.bounds[0]) / raster_res_deg).astype(int),\
+                np.ceil((180. + self.bounds[2]) / raster_res_deg).astype(int))
+            lat_bounds_pix =\
+                (np.ceil((90. - self.bounds[3]) / raster_res_deg).astype(int),\
+                np.ceil((90. - self.bounds[1]) / raster_res_deg).astype(int))
             self._elevation_grid =\
                 raster_array[lat_bounds_pix[0]:lat_bounds_pix[1],\
                 lon_bounds_pix[0]:lon_bounds_pix[1]]
-            raster_array = None
+            del raster_array ; gc.collect()
             print('Read lunar elevation data in %.2f minutes' %\
                 ((time.time() - t_start) / 60.))
         return self._elevation_grid
