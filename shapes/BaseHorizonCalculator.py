@@ -106,14 +106,16 @@ class BaseHorizonCalculator(object):
         Property storing the bounds of the elevation data grid.
         """
         if not hasattr(self, '_bounds'):
-            lon_lower_bound = self.observer_coordinates[0] -\
-                (self.grid_width_longitude / 2.)
-            lon_upper_bound = self.observer_coordinates[0] +\
-                (self.grid_width_longitude / 2.)
-            lat_lower_bound = self.observer_coordinates[1] -\
-                (self.grid_width_latitude / 2.)
-            lat_upper_bound = self.observer_coordinates[1] +\
-       	        (self.grid_width_latitude / 2.)
+            lat_lower_bound =\
+                max(self.observer_coordinates[1] - self.gamma_max, -90.)
+            lat_upper_bound =\
+                min(self.observer_coordinates[1] + self.gamma_max, 90.)
+            lon_arr = []
+            for angle in np.arange(0., 360., 0.01):
+                lon_arr += [self.find_lon_lat(np.radians(angle),\
+                    np.radians(self.gamma_max))[0]]
+            lon_lower_bound = np.amin(lon_arr)
+            lon_upper_bound = np.amax(lon_arr)
             self._bounds =\
                 [lon_lower_bound, lat_lower_bound,\
                  lon_upper_bound, lat_upper_bound]
@@ -176,10 +178,10 @@ class BaseHorizonCalculator(object):
         between grid points.
         """
         if not hasattr(self, '_elevation_interpolation_function'):
-            lon_array = np.arange(self.bounds[0], self.bounds[2],\
-                self.longitude_resolution)
-            lat_array = np.arange(self.bounds[1], self.bounds[3],\
-                self.latitude_resolution)
+            lon_array = np.linspace(self.bounds[0], self.bounds[2],\
+                self.elevation_grid.shape[1], endpoint=True)
+            lat_array = np.linspace(self.bounds[1], self.bounds[3],\
+       	       	self.elevation_grid.shape[0], endpoint=True)
             self._elevation_interpolation_function = RectBivariateSpline(\
                 lon_array, lat_array, np.flip(self.elevation_grid.T, axis=1),\
                 kx=self.elevation_interpolation_degree,\
