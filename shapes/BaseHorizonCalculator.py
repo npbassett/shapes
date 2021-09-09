@@ -143,7 +143,7 @@ class BaseHorizonCalculator(object):
         encompass either the North or South Pole.
         """
         if not hasattr(self, '_includes_pole'):
-            if (self.bounds[1] < -90.) or (self.bounds[3] > 90.):
+            if (self.bounds[1] == -90.) or (self.bounds[3] == 90.):
                 self._includes_pole = True
             else:
                 self._includes_pole = False
