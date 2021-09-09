@@ -175,9 +175,12 @@ class BaseHorizonCalculator(object):
     def elevation_interpolation_function(self):
         """
         Property storing the function that interpolates the elevation data
-        between grid points.
+        between grid points. This step may take longer for locations near
+        the North or South Pole because there are more grid points to
+        interpolate between.
         """
         if not hasattr(self, '_elevation_interpolation_function'):
+            t_start_interp = time.time()
             lon_array = np.linspace(self.bounds[0], self.bounds[2],\
                 self.elevation_grid.shape[1], endpoint=True)
             lat_array = np.linspace(self.bounds[1], self.bounds[3],\
@@ -186,6 +189,8 @@ class BaseHorizonCalculator(object):
                 lon_array, lat_array, np.flip(self.elevation_grid.T, axis=1),\
                 kx=self.elevation_interpolation_degree,\
                 ky=self.elevation_interpolation_degree)
+            print('Interpolated elevation data in %.2f minutes' %\
+                ((time.time() - t_start_interp) / 60.))
         return self._elevation_interpolation_function
 
     def find_lon_lat(self, alpha, gamma):
@@ -264,6 +269,7 @@ class BaseHorizonCalculator(object):
         try:
             import progressbar
             self.elevation_grid
+            self.elevation_interpolation_function
             for i in progressbar.progressbar(np.arange(N_alpha)):
                 start = time.time()
                 horizon_angles = []
@@ -271,6 +277,8 @@ class BaseHorizonCalculator(object):
                     horizon_angles += [self.horizon_angle(azimuths[i], gamma)]
                 horizon_profile += [np.amax(horizon_angles)]
         except ModuleNotFoundError:
+            self.elevation_grid
+            self.elevation_interpolation_function
             for i in np.arange(N_alpha):
                 start = time.time()
                 horizon_angles = []
