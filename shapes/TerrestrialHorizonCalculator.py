@@ -21,7 +21,7 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
     Class that calculates the angular horizon as seen from a
     location on Earth at the given coordinates.
     """
-    def __init__(self, observer_coordinates, gamma_min=0.005, gamma_max=1.0):
+    def __init__(self, observer_coordinates, gamma_min=0.005, gamma_max=0.5):
         """
         Initializes a new TerrestrialHorizonCalculator object with the given
         inputs.
