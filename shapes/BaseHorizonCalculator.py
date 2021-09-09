@@ -114,9 +114,6 @@ class BaseHorizonCalculator(object):
                 (self.grid_width_latitude / 2.)
             lat_upper_bound = self.observer_coordinates[1] +\
        	        (self.grid_width_latitude / 2.)
-            if (lat_lower_bound < -90.) or (lat_upper_bound > 90.):
-                raise ValueError('Locations near the poles are not'+\
-                    'currently supported. Working on a fix for this!')
             self._bounds =\
                 [lon_lower_bound, lat_lower_bound,\
                  lon_upper_bound, lat_upper_bound]
@@ -130,12 +127,21 @@ class BaseHorizonCalculator(object):
         bounds: (left, bottom, right, top) in degrees
         """
         if bounds[0] > bounds[2]:
-            return ValueError('Left boundary cannot be greater than the ' +\
+            raise ValueError('Left boundary cannot be greater than the ' +\
                 'right boundary')
-        if bounds[1] > bounds[3]:
-            return ValueError('Bottom boundary cannot be greater than the ' +\
+        elif bounds[1] > bounds[3]:
+            raise ValueError('Bottom boundary cannot be greater than the ' +\
                 'top boundary')
         self._bounds = bounds
+
+    @property
+    def includes_pole(self):
+        if not hasattr(self, '_includes_pole'):
+            if (self.bounds[1] < -90.) or (self.bounds[3] > 90.):
+                self._includes_pole = True
+            else:
+                self._includes_pole = False
+        return self._includes_pole
 
     @property
     def elevation_interpolation_degree(self):
