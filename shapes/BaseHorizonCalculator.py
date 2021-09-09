@@ -136,6 +136,10 @@ class BaseHorizonCalculator(object):
 
     @property
     def includes_pole(self):
+        """
+        Property that stores a boolean value, which is True if the bounds
+        encompass either the North or South Pole.
+        """
         if not hasattr(self, '_includes_pole'):
             if (self.bounds[1] < -90.) or (self.bounds[3] > 90.):
                 self._includes_pole = True
