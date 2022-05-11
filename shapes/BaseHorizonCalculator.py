@@ -250,7 +250,7 @@ class BaseHorizonCalculator(object):
             self.observer_elevation) / (self.body_radius + h)) / np.sin(gamma)))
         return eta
 
-    def horizon_profile(self, N_alpha, N_gamma):
+    def horizon_profile(self, N_alpha, N_gamma, return_gamma_max=False):
         """
         Calculates the full horizon profile.
 
@@ -258,6 +258,8 @@ class BaseHorizonCalculator(object):
         N_gamma: number of gamma angles (i.e. the angular distance from the
                  observer along the azimuthal angle alpha) from gamma_min
                  to gamma_max
+        return_gamma_max: If True, returns array containing gamma angle that
+                          defines horizon at each alpha angle.
 
         Returns an array of azimuthal angles and a corresponding array of horizon
         angles making up the horizon profile (in degrees).
@@ -266,6 +268,7 @@ class BaseHorizonCalculator(object):
         gammas = np.linspace(self.gamma_min * (np.pi / 180.),\
             self.gamma_max * (np.pi / 180.), N_gamma)
         horizon_profile = []
+        horizon_gammas = []
         try:
             import progressbar
             self.elevation_grid
@@ -276,6 +279,7 @@ class BaseHorizonCalculator(object):
                 for gamma in gammas:
                     horizon_angles += [self.horizon_angle(azimuths[i], gamma)]
                 horizon_profile += [np.amax(horizon_angles)]
+                horizon_gammas += [gammas[np.where(horizon_angles == np.amax(horizon_angles))][0]]
         except ModuleNotFoundError:
             self.elevation_grid
             self.elevation_interpolation_function
@@ -287,8 +291,13 @@ class BaseHorizonCalculator(object):
                 horizon_profile += [np.amax(horizon_angles)]
                 print('alpha angle %i/%i completed in %.1f seconds...'\
                     % (i+1, len(azimuths), time.time() - start))
-        return np.array(azimuths) * (180. / np.pi),\
-            np.array(horizon_profile) * (180. / np.pi)
+        if return_gamma_max:
+            return np.array(azimuths) * (180. / np.pi),\
+                np.array(horizon_profile) * (180. / np.pi),\
+                np.array(horizon_gammas) * (180. / np.pi)
+        else:
+            return np.array(azimuths) * (180. / np.pi),\
+                np.array(horizon_profile) * (180. / np.pi)
 
     def plot_topo_map(self, show=True, **kwargs):
         """
