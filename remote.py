@@ -13,8 +13,8 @@ aux_data = {\
     'LOLA': ['https://planetarymaps.usgs.gov/mosaic',\
     'Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif',\
     None],\
-    'LOLA_Kaguya': ['https://planetarymaps.usgs.gov/mosaic',\
-    'LolaKaguya_Topo/Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif',\
+    'LOLA_Kaguya': ['https://planetarymaps.usgs.gov/mosaic/LolaKaguya_Topo',\
+    'Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif',\
     None]}
 
 if not os.path.exists('input'):
