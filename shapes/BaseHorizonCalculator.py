@@ -97,7 +97,8 @@ class BaseHorizonCalculator(object):
         Property storing the elevation of the observer.
         """
         if not hasattr(self, '_observer_elevation'):
-            self._observer_elevation = self.interpolate_elevation(0., 0.)
+            self._observer_elevation = self.interpolate_elevation(0., 0.) +\
+                self.observer_height
         return self._observer_elevation
 
     @property
@@ -114,8 +115,13 @@ class BaseHorizonCalculator(object):
             for angle in np.arange(0., 360., 0.01):
                 lon_arr += [self.find_lon_lat(np.radians(angle),\
                     np.radians(self.gamma_max))[0]]
+            lon_arr = np.array(lon_arr) % 360.
             lon_lower_bound = np.amin(lon_arr)
+            if (lon_lower_bound > 180.):
+                lon_lower_bound = (lon_lower_bound % 180.) - 180.
             lon_upper_bound = np.amax(lon_arr)
+            if (lon_upper_bound > 180.):
+                lon_upper_bound = (lon_upper_bound % 180.) - 180.
             self._bounds =\
                 [lon_lower_bound, lat_lower_bound,\
                  lon_upper_bound, lat_upper_bound]
@@ -128,12 +134,12 @@ class BaseHorizonCalculator(object):
 
         bounds: (left, bottom, right, top) in degrees
         """
-        if bounds[0] > bounds[2]:
-            raise ValueError('Left boundary cannot be greater than the ' +\
-                'right boundary')
-        elif bounds[1] > bounds[3]:
-            raise ValueError('Bottom boundary cannot be greater than the ' +\
-                'top boundary')
+        #if bounds[0] > bounds[2]:
+        #    raise ValueError('Left boundary cannot be greater than the ' +\
+        #        'right boundary')
+        #elif bounds[1] > bounds[3]:
+        #    raise ValueError('Bottom boundary cannot be greater than the ' +\
+        #        'top boundary')
         self._bounds = bounds
 
     @property
@@ -180,8 +186,9 @@ class BaseHorizonCalculator(object):
         interpolate between.
         """
         if not hasattr(self, '_elevation_interpolation_function'):
+            print('Starting elevation interpolation...')
             t_start_interp = time.time()
-            lon_array = np.linspace(self.bounds[0], self.bounds[2],\
+            lon_array = np.linspace(self.bounds[0] % 360., self.bounds[2] % 360.,\
                 self.elevation_grid.shape[1], endpoint=True)
             lat_array = np.linspace(self.bounds[1], self.bounds[3],\
        	       	self.elevation_grid.shape[0], endpoint=True)
@@ -230,7 +237,7 @@ class BaseHorizonCalculator(object):
         Returns the elevation in meters.
         """
         l, b = self.find_lon_lat(alpha, gamma)
-        return self.elevation_interpolation_function(l, b, grid=False)
+        return self.elevation_interpolation_function(l % 360., b, grid=False)
 
     def horizon_angle(self, alpha, gamma):
         """
@@ -308,9 +315,11 @@ class BaseHorizonCalculator(object):
         **kwargs: keyword arguments to pass to matplotlib.pyplot.imshow()
         """
         fig, ax = plt.subplots()
-        plt.scatter(*self.observer_coordinates, c='r', marker='*', s=50)
-        plt.imshow(self.elevation_grid, extent=(self.bounds[0], self.bounds[2],\
-            self.bounds[1], self.bounds[3]), cmap='terrain', **kwargs)
+        plt.scatter(self.observer_coordinates[0] % 360., self.observer_coordinates[1],\
+            c='r', marker='*', s=50)
+        plt.imshow(self.elevation_grid, extent=(self.bounds[0] % 360.,\
+            self.bounds[2] % 360., self.bounds[1], self.bounds[3]),\
+            cmap='terrain', **kwargs)
         plt.xlabel(r'Longitude ($^{\circ}$)')
         plt.ylabel(r'Latitude ($^{\circ}$)')
         plt.colorbar(label='Elevation (m)')

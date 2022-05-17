@@ -12,6 +12,9 @@ options = sys.argv[1:]
 aux_data = {\
     'LOLA': ['https://planetarymaps.usgs.gov/mosaic',\
     'Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif',\
+    None],\
+    'LOLA_Kaguya': ['https://planetarymaps.usgs.gov/mosaic',\
+    'LolaKaguya_Topo/Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif',\
     None]}
 
 if not os.path.exists('input'):
@@ -43,7 +46,12 @@ else:
     to_download = list(aux_data.keys())
     files = [None] * len(to_download)
 
+prompts = ['Would you like to download Global LOLA DEM (8 GB)? [y/n]: ',\
+    'Would you like to download higher resolution LOLA/Kaguya DEM (21 GB)? [y/n]: ']
 for i, direc in enumerate(to_download):
+    answer = input(prompts[i])
+    if answer.lower() != 'y':
+        continue
     if not os.path.exists(direc):
         os.mkdir(direc)
     os.chdir(direc)

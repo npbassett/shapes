@@ -21,12 +21,14 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
     Class that calculates the angular horizon as seen from a
     location on Earth at the given coordinates.
     """
-    def __init__(self, observer_coordinates, gamma_min=0.005, gamma_max=0.5):
+    def __init__(self, observer_coordinates, observer_height=0.,\
+        gamma_min=0.005, gamma_max=0.5):
         """
         Initializes a new TerrestrialHorizonCalculator object with the given
         inputs.
 
         observer_coordinates: tuple of the form (longitude, latitude) in degrees
+        observer_height: height of observer (in meters) above ground level
         gamma_min: minimum angle which to consider in the calculation of the
                    horizon (in degrees)
         gamma_max: maximum angle which to consider in the calculation of the
@@ -35,6 +37,7 @@ class TerrestrialHorizonCalculator(BaseHorizonCalculator):
         self.observer_coordinates = observer_coordinates
         self.gamma_min = gamma_min
         self.gamma_max = gamma_max
+        self.observer_height = observer_height
 
     @property
     def body_radius(self):
