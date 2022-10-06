@@ -7,7 +7,7 @@ Description: imports important elements from various files.
 """
 
 from shapes.coordinates import CTP_coordinates, EDGES_coordinates,\
-    REACH_coordinates
+    REACH_coordinates, PRIZM_coordinates, SARAS_coordinates, MIST_coordinates
 from shapes.BaseHorizonCalculator import BaseHorizonCalculator
 from shapes.TerrestrialHorizonCalculator import\
     TerrestrialHorizonCalculator
