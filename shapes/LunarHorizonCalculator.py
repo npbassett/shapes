@@ -57,7 +57,7 @@ class LunarHorizonCalculator(BaseHorizonCalculator):
             min_lat = self.bounds[1]
             max_lat = self.bounds[3]
             path_to_SLDEM = '{!s}/input/'.format(os.getenv('SHAPES')) +\
-                'LOLA/Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif'
+                'LOLA_Kaguya/Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif'
             if (min_lat > -60.) and (max_lat < 60.) and os.path.exists(path_to_SLDEM):
                 print('Elevation grid is within 60 deg S and 60 deg N, '+\
                     'using high resolution SLDEM (SELENE + LOLA).')
@@ -149,7 +149,7 @@ class LunarHorizonCalculator(BaseHorizonCalculator):
             t_start = time.time()
             if self.use_SLDEM:
                 elevation_data_path = '{!s}/input/'.format(os.getenv('SHAPES')) +\
-                    'LOLA/Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif'
+                    'LOLA_Kaguya/Lunar_LRO_LOLAKaguya_DEMmerge_60N60S_512ppd.tif'
                 max_lat = 60.
             else:
                 elevation_data_path = '{!s}/input/'.format(os.getenv('SHAPES')) +\
