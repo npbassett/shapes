@@ -306,10 +306,36 @@ class BaseHorizonCalculator(object):
             return np.array(azimuths) * (180. / np.pi),\
                 np.array(horizon_profile) * (180. / np.pi)
 
-    def plot_topo_map(self, show=True, **kwargs):
+    def horizon_lon_lats(self, N_alpha, N_gamma):
+        """
+        Calculates the coordinates (in longitude/latitude) of the points that define
+        the horizon for each azimuthal angle.
+
+        N_alpha: number of azimuth angles from 0 to 2pi
+        N_gamma: number of gamma angles (i.e. the angular distance from the
+                 observer along the azimuthal angle alpha) from gamma_min
+                 to gamma_max
+
+        Returns two arrays, each with length N_alpha, of the longitudes and
+        latitudes of the points defining the horizon.
+        """
+        horizon_azimuths, horizon_profile, horizon_gammas = self.horizon_profile(\
+            N_alpha, N_gamma, return_gamma_max=True)
+        horizon_lons, horizon_lats = self.find_lon_lat(\
+            horizon_azimuths * (np.pi / 180.), horizon_gammas * (np.pi / 180.))
+        return horizon_lons, horizon_lats
+
+    def plot_topo_map(self, plot_horizon=False, N_alpha=361, N_gamma=1000,\
+        show=True, **kwargs):
         """
         Plots a 2D map of the elevation data.
 
+        plot_horizon: if True, points defining the horizon are plotted on top of
+                      the map
+        N_alpha: number of azimuthal angles used to calculate the horizon. Only
+                 used if plot_horizon=True
+        N_gamma: number of gamma angles used to calculate the horizon. Only used
+                 if plot_horizon=True
         show: if True, matplotlib.pyplot.show() is called before this function
               returns
         **kwargs: keyword arguments to pass to matplotlib.pyplot.imshow()
@@ -320,6 +346,9 @@ class BaseHorizonCalculator(object):
         plt.imshow(self.elevation_grid, extent=(self.bounds[0] % 360.,\
             self.bounds[2] % 360., self.bounds[1], self.bounds[3]),\
             cmap='terrain', **kwargs)
+        if plot_horizon == True:
+            horizon_lons, horizon_lats = self.horizon_lon_lats(N_alpha, N_gamma)
+            plt.plot(horizon_lons % 360., horizon_lats, c='k')
         plt.xlabel(r'Longitude ($^{\circ}$)')
         plt.ylabel(r'Latitude ($^{\circ}$)')
         plt.colorbar(label='Elevation (m)')
