@@ -1,4 +1,4 @@
-# SHAPES
+# SHAPES (Horizon Calculator)
 The Simulating Horizon Angle Profile from Elevation Sets (SHAPES) code calculates the angular horizon as seen from a given location. While SHAPES was developed primarily for low radio frequency global 21-cm experiments, the code is broadly applicable.
 
 ## Citation
